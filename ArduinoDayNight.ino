@@ -7,13 +7,16 @@
 const int morning[] = {  7, 30 };
 const int evening[] = { 20, 15 };
 
+const boolean debug = true;
+
 // Led pin for morning and evening
 const int morningLedPin = 13;
 const int eveningLedPin = 12;
 
 void setup()
 {
-  Serial.begin(9600);
+  if(debug == true)
+    Serial.begin(9600);
   
   pinMode(morningLedPin, OUTPUT);
   pinMode(eveningLedPin, OUTPUT);
@@ -26,7 +29,8 @@ void setup()
   
   if(timeStatus()!= timeSet)
   {
-     Serial.println("Unable to sync with the RTC");
+     if(debug == true)
+       Serial.println("Unable to sync with the RTC");
   }
   else
   {
@@ -53,7 +57,8 @@ void loop()
 {
   if (timeStatus() == timeSet)
   {
-    digitalClockDisplay();
+    if(debug == true)
+      digitalClockDisplay();
   }
   else
   {
@@ -89,14 +94,16 @@ void printDigits(int digits){
 
 void LightMorning()
 {
-  Serial.println("We are now on morning");
   digitalWrite(morningLedPin, HIGH);
   digitalWrite(eveningLedPin, LOW);
+  if(debug == true)
+    Serial.println("We are now on morning");
 }
 
 void LightEvening()
 {
-  Serial.println("We are now on evening");
   digitalWrite(morningLedPin, LOW);
-  digitalWrite(eveningLedPin, HIGH);        
+  digitalWrite(eveningLedPin, HIGH);
+  if(debug == true)
+    Serial.println("We are now on evening");
 }
